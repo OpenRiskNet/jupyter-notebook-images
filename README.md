@@ -35,12 +35,19 @@ List. You will add something like this:
   'display_name': 'Simple RDKit',
   'kubespawner_override': {
     'image_spec': 'simple-rdkit:latest',
-    'supplemental_gids': [100]
+    'supplemental_gids': [100],
+    'volume_mounts': [
+       {
+         'name': 'data',
+         'mountPath': '/home/jovyan'
+       }
+    ]
   }
 }
 ```
 
 The `supplemental_gids` parameter is needed because the image needs to run as a predefined goroup ID.
+The `volume_mounts` specifies where to mount the user's PVC and needs to be where Jupyter is looking for its notebooks.
 
 ## Step 3: Redeploy JuputerHub
 
