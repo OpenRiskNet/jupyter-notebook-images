@@ -8,6 +8,10 @@ set -eo pipefail
 
 /opt/app-root/builder/assemble
 
+#  Install sparql kernel
+
+jupyter sparqlkernel install --user
+
 # Activate ipywidgets extension.
 
 jupyter nbextension enable --py widgetsnbextension --sys-prefix
