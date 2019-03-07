@@ -1,4 +1,4 @@
-### scipy-notebook
+### sparql-notebook
 
 ipywidgets==7.4.*
 pandas==0.24.*
