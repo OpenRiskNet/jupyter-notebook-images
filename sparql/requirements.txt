@@ -6,4 +6,5 @@ numexpr==2.6.*
 scipy==1.2.*
 widgetsnbextension==3.4.*
 matplotlib==3.0.*
+graphviz==0.10.*
 sparqlkernel==1.2.*
