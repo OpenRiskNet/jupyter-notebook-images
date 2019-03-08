@@ -10,7 +10,7 @@ set -eo pipefail
 
 #  Install sparql kernel
 
-jupyter sparqlkernel install
+jupyter sparqlkernel install --user
 
 # Activate ipywidgets extension.
 
