@@ -17,6 +17,4 @@ USER 1001
 
 RUN /tmp/scripts/assemble
 
-RUN jupyter sparqlkernel install --user
-
 CMD [ "/opt/app-root/builder/run" ]
