@@ -57,4 +57,30 @@ Run a new deployment of the `jupyterhub` deployment.
 
 ## Deploying a s2i derived notebook image to the Jupyter project in an ORN VE
 
+See also the [deployment](https://github.com/OpenRiskNet/home/tree/master/openshift/deployments/jupyter) for JupyterHub and the 
+standard notebooks.
+
 We use the `sparql` notebook as an example.
+
+### Step 1: Creating the build
+From the `sparql` directory:
+```
+oc create -f templates/build-config.yaml
+```
+ 
+### Step 2: Adding the image to the JupyterHub configuration
+
+Edit the `jupyterhub-cfg` ConfigMap in the `jupyter` project and add the defintion of your image to the `c.KubeSpawner.profile_list`
+List. You will add something like this:
+```
+{
+    'display_name': 'SPARQL Notebook (CentOS 7 / Python 3.6 / SPARQL)',
+    'kubespawner_override': {
+        'image_spec': 's2i-sparql-notebook:latest'
+    }
+}
+```
+
+### Step 3: Redeploy JuputerHub
+
+Run a new deployment of the `jupyterhub` deployment.
