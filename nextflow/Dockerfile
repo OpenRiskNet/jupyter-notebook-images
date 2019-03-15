@@ -24,15 +24,10 @@ RUN echo 'export GOPATH=${HOME}/go' >> ~/.bashrc && \
 
 RUN go get -u github.com/golang/dep/cmd/dep
 
-RUN export VERSION=3.0.3 && # adjust this as necessary \
-    mkdir -p $GOPATH/src/github.com/sylabs && \
-    cd $GOPATH/src/github.com/sylabs && \
-    wget https://github.com/sylabs/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
-    tar -xzf singularity-${VERSION}.tar.gz && \
-    cd ./singularity && \
-    ./mconfig
-
-RUN ./mconfig && \
-    make -C ./builddir && \
-    sudo make -C ./builddir install
- 
+RUN export VERSION=3.0.2
+    wget https://github.com/singularityware/singularity/releases/download/$VERSION/singularity-$VERSION.tar.gz
+    tar xvf singularity-$VERSION.tar.gz
+    cd singularity-$VERSION
+    ./configure --prefix=/usr/local
+    make
+    make install
