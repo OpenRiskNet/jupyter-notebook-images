@@ -2,11 +2,12 @@ name: rdkit
 channels:
   - rdkit
 dependencies:
-  - ipywidgets=7.4.*
+#  - ipywidgets=7.4.*
   - pandas=0.24.*
-  - numexpr=2.6.*
+#  - numexpr=2.6.*
   - matplotlib=3.0.*
-  - nomkl=3.0
-  - cairo=1.14.*
-  - scikit-learn=0.20.*
+#  - nomkl=3.0
+#  - cairo=1.14.*
+#  - scikit-learn=0.20.*
   - rdkit
+  - cairocffi
