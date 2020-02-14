@@ -17,6 +17,8 @@ RUN apt-get clean && \
     chmod g+w /etc/passwd
 # we make /etc/password writeable by group so that when we run as non-root user it can be added and we get a username
 
+USER $NB_USER
+
 RUN conda install --yes --freeze-installed \
     pandas \
     requests \
@@ -40,11 +42,6 @@ RUN conda install --yes --freeze-installed \
   && find /opt/conda/ -follow -type f -name '*.a' -delete \
   && find /opt/conda/ -follow -type f -name '*.pyc' -delete \
   && find /opt/conda/ -follow -type f -name '*.js.map' -delete \
-  && chgrp -Rf root $CONDA_DIR \
-  && chmod -Rf g+rwX $CONDA_DIR \
-  && chgrp -Rf root /home/$NB_USER \
-  && chmod -Rf g+rwX /home/$NB_USER \
-  && chgrp -Rf root /etc/jupyter/ \
-  && chmod -Rf g+rwX /etc/jupyter/
-
-USER $NB_USER
+  && fix-permissions $CONDA_DIR \
+  && fix-permissions /home/$NB_USER \
+  && fix-permissions /etc/jupyter/
