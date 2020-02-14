@@ -13,7 +13,9 @@ RUN apt-get clean && \
         gfortran \
         build-essential && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* && \
+    chmod g+w /etc/passwd
+# we make /etc/password writeable by group so that when we run as non-root user it can be added and we get a username
 
 USER $NB_USER
 
@@ -31,17 +33,18 @@ RUN conda install --yes --freeze-installed \
     r-ggplot2 \
     r-biocmanager \
     r-drc \
+    r-mass \
+    r-rjsonio \
+    r-dplyr \
+    r-magrittr \
+  && R -e 'BiocManager::install("DESeq2")' \
   && conda clean -afy\
   && find /opt/conda/ -follow -type f -name '*.a' -delete \
   && find /opt/conda/ -follow -type f -name '*.pyc' -delete \
   && find /opt/conda/ -follow -type f -name '*.js.map' -delete \
-  && fix-permissions $CONDA_DIR \
-  && fix-permissions /home/$NB_USER \
-  && fix-permissions /etc/jupyter/
-
-RUN R -e 'BiocManager::install("DESeq2")' && \
-    fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER && \
-    fix-permissions /etc/jupyter/
-
-USER $NB_USER
+  && chgrp -Rf root $CONDA_DIR \
+  && chmod -Rf g+w $CONDA_DIR \
+  && chgrp -Rf root /home/$NB_USER \
+  && chmod -Rf g+w /home/$NB_USER \
+  && chgrp -Rf root /etc/jupyter/ \
+  && chmod -Rf g+w /etc/jupyter/
